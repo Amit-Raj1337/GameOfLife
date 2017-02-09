@@ -1,6 +1,13 @@
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class GoL {
 char original[][]=new char[7][7];
@@ -12,6 +19,15 @@ int x;
 int y;
 String xinput;
 String yinput;
+
+
+
+
+JFrame frame=new JFrame(); //creates frame
+
+JButton[][] grid; //names the grid of buttons
+
+JButton startButton,nextButton;
 
 	public GoL() //constructor
 	{
@@ -47,7 +63,7 @@ String yinput;
 		
 	}
 	
-	public void printGrid()
+	/*      public void printGrid()
 	{ 
 		for(int i=0;i<7;i++)
 		{
@@ -59,10 +75,10 @@ String yinput;
 			System.out.println();
 		}
 		
-	}
+	}    */
 	
 	
-	public void insertLivingCells(int countOfLiving) throws IOException
+/*	public void insertLivingCells(int countOfLiving) throws IOException
 		{
 			for(int i=0;i<countOfLiving;i++)
 			{
@@ -84,16 +100,77 @@ String yinput;
 				
 			System.out.println("Insertion Complete");
 		
-		}
+		} */
+	
+	
+	 public void intializeGrid(int row, int column){ //
+         frame.setLayout(new GridLayout(0,column)); //set layout
+
+     grid=new JButton[row][column]; //allocate the size of grid
+     for(int x=0; x<row; x++){
+             for(int y=0; y<column; y++){
+                     grid[x][y]=new JButton(x+", "+y); //creates new button     
+                     //adds button to grid
+                                                                                                                                 
+                               grid[x][y].addActionListener(new ActionListener()
+                               {
+                                 public void actionPerformed(ActionEvent e)
+                                 {
+                               	 
+                               	JButton temp= (JButton) e.getSource();
+                               	
+                               	temp.setText("X");
+                               	temp.setBackground(Color.RED);
+                               	
+                                 for(int x=0; x<row; x++){
+                                     for(int y=0; y<column; y++){
+                                     
+                                     	if(temp==grid[x][y])
+                                     	{
+                                     		
+                                     		
+                                     		
+                                     		
+                                     		System.out.println("X: "+x+"  Y: "+y);
+                                     	}
+                                     }}
+                               	
+                               	
+                
+                                 }
+                               });
+                                                          
+                     
+                               frame.add(grid[x][y]);
+
+                     
+             }
+}// end of nested loop
+     
+     startButton=new JButton("Start");
+   frame.add(startButton);
+    
+    nextButton=new JButton("Next");
+    frame.add(nextButton);
+     
+     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   //  frame.setSize(1000, 1000);
+     frame.pack(); //sets appropriate size for frame
+     frame.setVisible(true); //makes frame visible
+}
+
+	
+	
+	
 	
 	public void nextInstanceOfGoL()
 		{
-		rowlength=7;
-		columnlength=7;
+		rowlength=10;
+		columnlength=10;
 		int counter=0;
-		for(int i=0;i<7;i++)
+		for(int i=0;i<rowlength;i++)
 		{
-			for(int j=0;j<7;j++)
+			for(int j=0;j<columnlength;j++)
 			{
 				
 				if((i==0)||(i==(rowlength-1))||(j==0)||(j==(columnlength-1)))//if element is present in either edges (rows or columns)
